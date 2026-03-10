@@ -20,10 +20,14 @@ public class HW2Enemy : MonoBehaviour
     // Tags and Names 
     private string boundsTag = "Bounds";
     private string bulletTag = "Bullet";
+    private string bullet2Tag = "Bullet2";
     private string gameControllerComponent = "GameController";
 
-    // Component 
+    // Components 
     private HW2GameController _hw2GameController;
+    // Audio
+    private AudioSource _audio; 
+    public AudioClip _clip;
 
     //==================================================================================================================
     // Base Method  
@@ -33,7 +37,9 @@ public class HW2Enemy : MonoBehaviour
     private void Start()
     {
         _hw2GameController = GameObject.Find(gameControllerComponent).GetComponent<HW2GameController>();
+        _audio = GetComponent<AudioSource>();
         StartCoroutine(Death());
+
     }
 
     public void SetSpeed(Vector3 newSpeed)
@@ -59,9 +65,18 @@ public class HW2Enemy : MonoBehaviour
         {
             //Updates the Score 
             _hw2GameController.UpdateScore();
+            //Play pop sound
+            AudioPlay();
             //Destorys the bullet
             Destroy(collision.gameObject);
-            //Destorys the enemy 
+            //Destroys the enemy 
+            Destroy(gameObject);
+        }
+        // If the enemy touches Bullet2
+        else if(collision.gameObject.tag == bullet2Tag)
+        {
+            _hw2GameController.UpdateScore();
+            AudioPlay();
             Destroy(gameObject);
         }
         // If the enemy touches a bound it gets destored 
@@ -69,5 +84,10 @@ public class HW2Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void AudioPlay()
+    {
+        AudioSource.PlayClipAtPoint(_clip, transform.position);
     }
 }
