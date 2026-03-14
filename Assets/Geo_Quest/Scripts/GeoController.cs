@@ -33,7 +33,7 @@ public class GeoController : MonoBehaviour
         //Player movement
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
-        rb2d.velocity = new Vector2(xInput * xSpeed, yInput * ySpeed);
+        rb2d.velocity = new Vector2(xInput * xSpeed, rb2d.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
