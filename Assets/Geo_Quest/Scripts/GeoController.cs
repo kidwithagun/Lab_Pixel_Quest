@@ -49,6 +49,7 @@ public class GeoController : MonoBehaviour
         }
     }
 
+    public int coinCount = 0;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.tag)
@@ -62,6 +63,13 @@ public class GeoController : MonoBehaviour
             case "Finish":
             {
                     SceneManager.LoadScene(nextLevel);
+                    break;
+            }
+            case "Coin":
+            {
+                    Destroy(collision.gameObject);
+                    coinCount++;
+                    print(coinCount);
                     break;
             }
         }
